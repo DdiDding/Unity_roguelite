@@ -5,6 +5,7 @@
 // Feedback: mailto:ellan@gameframework.cn
 //------------------------------------------------------------
 
+using GameFramework;
 using GameFramework.Procedure;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,7 +39,16 @@ namespace UnityGameFramework.Editor
             }
             else if (EditorApplication.isPlaying)
             {
-                EditorGUILayout.LabelField("Current Procedure", t.CurrentProcedure == null ? "None" : t.CurrentProcedure.GetType().ToString());
+                ProcedureBase currentProcedure = null;
+                try
+                {
+                    currentProcedure = t.CurrentProcedure;
+                }
+                catch (GameFrameworkException)
+                {
+                }
+
+                EditorGUILayout.LabelField("Current Procedure", currentProcedure == null ? "None" : currentProcedure.GetType().ToString());
             }
 
             EditorGUI.BeginDisabledGroup(EditorApplication.isPlayingOrWillChangePlaymode);
