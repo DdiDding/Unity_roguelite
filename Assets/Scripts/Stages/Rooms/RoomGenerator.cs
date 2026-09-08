@@ -2,21 +2,26 @@ using UnityEngine;
 
 public class RoomGenerator
 {
-    // x: 최소, y: 최대
-    public Vector2 WidthSizeRange; 
-    public Vector2 HeightSizeRange;
+    readonly public (int Min, int Max) WidthSizeRange;
+    readonly public (int Min, int Max) HeightSizeRange;
 
+    public RoomGenerator((int Min, int Max) widthSizeRange, (int Min, int Max) heightSizeRange)
+    {
+        WidthSizeRange = widthSizeRange;
+        HeightSizeRange = heightSizeRange;
+    }
 
     // 랜덤한 크기의 방 생성
-    public Room GenerateRoom(int randomSeed)
+    // randomGenerator: System.Random 객체
+    public Room GenerateRoom(System.Random randomGenerator)
     {
-        var random = new System.Random(randomSeed);
+        Debug.Assert(randomGenerator != null);
 
         // 방의 Boundery 설정
         Room room;
         {
-            float width = Random.Range(WidthSizeRange.x, WidthSizeRange.y);
-            float height = Random.Range(HeightSizeRange.x, HeightSizeRange.y);
+            float width = randomGenerator.Next(WidthSizeRange.Min, WidthSizeRange.Max);
+            float height = randomGenerator.Next(HeightSizeRange.Min, HeightSizeRange.Max);
             room = new Room(width, height);
         }
 
