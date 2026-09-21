@@ -1,4 +1,5 @@
 using GameFramework.Fsm;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
@@ -9,7 +10,20 @@ public class Player : EntityLogic
     private Animator animator;
     private FsmComponent fsmComponent;
     private Transform cameraTransform;
-    
+
+    private InputAction moveAction;
+    private InputAction attackAction;
+
+    protected override void OnInit(object userData)
+    {
+        base.OnInit(userData);
+        animator = GetComponentInChildren<Animator>(true);
+
+        moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
+        attackAction = InputSystem.actions.FindAction("Player/Attack", throwIfNotFound: true);
+        return;
+    }
+
     private void CreateFsm()
     {
         fsmComponent = GameEntry.GetComponent<FsmComponent>();
@@ -51,12 +65,7 @@ public class Player : EntityLogic
         base.OnHide(isShutdown, userData);
     }
 
-    protected override void OnInit(object userData)
-    {
-        base.OnInit(userData);
-        animator = GetComponentInChildren<Animator>(true);
-        return;
-    }
+
 
 
     protected override void OnShow(object userData)
@@ -97,16 +106,18 @@ public class Player : EntityLogic
 
     public Vector2 ReadMoveInput()
     {
-        var keyboard = Keyboard.current;
-        if (keyboard == null)
-            return Vector2.zero;
-
-        float x = (keyboard.dKey.isPressed ? 1f : 0f)
-                - (keyboard.aKey.isPressed ? 1f : 0f);
-
-        float y = (keyboard.wKey.isPressed ? 1f : 0f)
-                - (keyboard.sKey.isPressed ? 1f : 0f);
-
-        return new Vector2(x, y).normalized;
+        Vector2 input = moveAction.ReadValue<Vector2>();
+        return Vector2.ClampMagnitude(input, 1f);
     }
+
+    // 나중에 키 테스트할지도 모름
+    //public TestKey()
+    //{
+    //    var keyboard = Keyboard.current;
+    //    if (keyboard == null)
+    //        return Vector2.zero;
+
+    //    float x = (keyboard.dKey.isPressed ? 1f : 0f)
+    //            - (keyboard.aKey.isPressed ? 1f : 0f);
+    //}
 }
