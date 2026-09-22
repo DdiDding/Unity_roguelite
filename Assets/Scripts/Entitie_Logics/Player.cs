@@ -1,5 +1,4 @@
 using GameFramework.Fsm;
-using UnityEditor.Timeline.Actions;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
@@ -11,16 +10,14 @@ public class Player : EntityLogic
     private FsmComponent fsmComponent;
     private Transform cameraTransform;
 
-    private InputAction moveAction;
-    private InputAction attackAction;
-
+    private InputComponent inputComponent { get; set; }
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
         animator = GetComponentInChildren<Animator>(true);
 
-        moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
-        attackAction = InputSystem.actions.FindAction("Player/Attack", throwIfNotFound: true);
+        inputComponent = GameEntry.GetComponent<InputComponent>();
+
         return;
     }
 
@@ -34,39 +31,18 @@ public class Player : EntityLogic
         );
     }
 
-    protected override void OnAttached(EntityLogic childEntity, Transform parentTransform, object userData)
-    {
-        base.OnAttached(childEntity, parentTransform, userData);
-    }
-
-    protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
-    {
-        base.OnAttachTo(parentEntity, parentTransform, userData);
-    }
-
-    protected override void OnDetached(EntityLogic childEntity, object userData)
-    {
-        base.OnDetached(childEntity, userData);
-    }
-
-    protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
-    {
-        base.OnDetachFrom(parentEntity, userData);
-    }
-
     protected override void OnHide(bool isShutdown, object userData)
     {
         if (cameraTransform != null && cameraTransform.parent == CachedTransform)
         {
             cameraTransform.SetParent(null, true);
         }
-
         cameraTransform = null;
+
+        fsmComponent.DestroyFsm(mFsm);
+
         base.OnHide(isShutdown, userData);
     }
-
-
-
 
     protected override void OnShow(object userData)
     {
@@ -106,8 +82,7 @@ public class Player : EntityLogic
 
     public Vector2 ReadMoveInput()
     {
-        Vector2 input = moveAction.ReadValue<Vector2>();
-        return Vector2.ClampMagnitude(input, 1f);
+        return inputComponent.ReadMoveInput();
     }
 
     // 나중에 키 테스트할지도 모름
