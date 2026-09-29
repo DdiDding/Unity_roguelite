@@ -3,9 +3,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
 
-public class Player : EntityLogic
+public class PlayerLogic : EntityLogic
 {
-    private IFsm<Player> mFsm;
+    private IFsm<PlayerLogic> mFsm;
     private Animator animator;
     private FsmComponent fsmComponent;
     private Transform cameraTransform;
@@ -30,20 +30,6 @@ public class Player : EntityLogic
             new PlayerStateMove()
         );
     }
-
-    protected override void OnHide(bool isShutdown, object userData)
-    {
-        if (cameraTransform != null && cameraTransform.parent == CachedTransform)
-        {
-            cameraTransform.SetParent(null, true);
-        }
-        cameraTransform = null;
-
-        fsmComponent.DestroyFsm(mFsm);
-
-        base.OnHide(isShutdown, userData);
-    }
-
     protected override void OnShow(object userData)
     {
         base.OnShow(userData);
@@ -64,6 +50,20 @@ public class Player : EntityLogic
         base.OnUpdate(elapseSeconds, realElapseSeconds);
         UpdateAnimation();
     }
+
+    protected override void OnHide(bool isShutdown, object userData)
+    {
+        if (cameraTransform != null && cameraTransform.parent == CachedTransform)
+        {
+            cameraTransform.SetParent(null, true);
+        }
+        cameraTransform = null;
+
+        fsmComponent.DestroyFsm(mFsm);
+
+        base.OnHide(isShutdown, userData);
+    }
+
 
     // Anim관련 값이 많아질거 같아서 일단 함수로 묶어둠
     private void UpdateAnimation()

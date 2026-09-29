@@ -11,10 +11,10 @@ enum PlayerState
     Die
 }
 
-public class PlayerStateIdle : FsmState<Player>
+public class PlayerStateIdle : FsmState<PlayerLogic>
 {
     protected override void OnUpdate(
-       IFsm<Player> fsm, float elapseSeconds, float realElapseSeconds)
+       IFsm<PlayerLogic> fsm, float elapseSeconds, float realElapseSeconds)
     {
         Debug.Log("PlayerStateIdle OnUpdate");
         if (fsm.Owner.ReadMoveInput() != Vector2.zero)

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityGameFramework.Runtime;
 
-public class Weapon :EntityLogic
+public class WeaponLogic :EntityLogic
 {
     
 }

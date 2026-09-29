@@ -1,9 +1,9 @@
 using GameFramework.Fsm;
 using UnityEngine;
 
-public class PlayerStateMove : FsmState<Player>
+public class PlayerStateMove : FsmState<PlayerLogic>
 {
-    protected override void OnUpdate(IFsm<Player> fsm, float elapseSeconds, float realElapseSeconds)
+    protected override void OnUpdate(IFsm<PlayerLogic> fsm, float elapseSeconds, float realElapseSeconds)
     {
 
         Vector2 direction = fsm.Owner.ReadMoveInput();
