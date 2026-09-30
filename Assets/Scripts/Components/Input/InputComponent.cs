@@ -7,8 +7,8 @@ public sealed class InputComponent : GameFrameworkComponent
 {
     private InputAction moveAction;
     private InputAction attackAction;
-    
     public event System.Action OnAttackEvent;
+
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Life Cycle
@@ -17,12 +17,14 @@ public sealed class InputComponent : GameFrameworkComponent
     protected override void Awake()
     {
         base.Awake();
+
+        moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
+        attackAction = InputSystem.actions.FindAction("Player/Attack", throwIfNotFound: true);
     }
 
     private void Start() // MonoBehaviour에 정의하는 Start 메서드, 게임 시작 시 한 번 호출
     {
-        moveAction = InputSystem.actions.FindAction("Player/Move", throwIfNotFound: true);
-        attackAction = InputSystem.actions.FindAction("Player/Attack", throwIfNotFound: true);
+
     }
 
     private void OnEnable()

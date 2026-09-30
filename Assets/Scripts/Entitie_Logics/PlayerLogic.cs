@@ -48,7 +48,7 @@ public class PlayerLogic : EntityLogic
 
         // Event Subscription (Hide때 구독 해지 해야하므로 Show에서 구독 설정)
         {
-            inputComponent.AttackAction.performed += OnAttack;
+            inputComponent.OnAttackEvent += OnAttack;
         }
     }
 
@@ -75,7 +75,7 @@ public class PlayerLogic : EntityLogic
 
         // Event Unsubscription
         {
-            inputComponent.AttackAction.performed -= OnAttack;
+            inputComponent.OnAttackEvent -= OnAttack;
         }
 
         base.OnHide(isShutdown, userData);
@@ -112,7 +112,7 @@ public class PlayerLogic : EntityLogic
     }
 
 
-    private void OnAttack(InputAction.CallbackContext context)
+    private void OnAttack()
     {
         // DoSomething when attack input is performed
     }
