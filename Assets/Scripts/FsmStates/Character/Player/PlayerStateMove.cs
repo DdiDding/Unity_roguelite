@@ -7,8 +7,7 @@ public class PlayerStateMove : FsmState<PlayerLogic>
     {
 
         Vector2 direction = fsm.Owner.ReadMoveInput();
-
-        Debug.Log("PlayerStateMove OnUpdate" + direction);
+        //Debug.Log("PlayerStateMove OnUpdate" + direction);
 
         if (direction == Vector2.zero)
         {

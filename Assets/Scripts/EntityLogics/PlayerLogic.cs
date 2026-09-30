@@ -9,6 +9,7 @@ public class PlayerLogic : EntityLogic
     private Animator animator;
     private FsmComponent fsmComponent;
     private Transform cameraTransform;
+    private WeaponComponent weaponComponent;
 
     private InputComponent inputComponent { get; set; }
 
@@ -19,8 +20,14 @@ public class PlayerLogic : EntityLogic
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
-        animator = GetComponentInChildren<Animator>(true);
+
         inputComponent = GameEntry.GetComponent<InputComponent>();
+
+        weaponComponent = GetComponent<WeaponComponent>();
+        Transform upperSocket = CachedTransform.Find("Visual/WeaponSocketUpper");
+        weaponComponent?.CustomInit(this, upperSocket);
+        animator = GetComponentInChildren<Animator>(true);
+
         return;
     }
 
@@ -56,6 +63,8 @@ public class PlayerLogic : EntityLogic
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
         UpdateAnimation();
+
+        TestKey();
     }
 
     protected override void OnHide(bool isShutdown, object userData)
@@ -115,6 +124,7 @@ public class PlayerLogic : EntityLogic
     private void OnAttack()
     {
         // DoSomething when attack input is performed
+        Debug.Log("PlayerLogic: Attack input performed!");
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -127,13 +137,13 @@ public class PlayerLogic : EntityLogic
     }
 
     // 나중에 키 테스트할지도 모름
-    //public TestKey()
-    //{
-    //    var keyboard = Keyboard.current;
-    //    if (keyboard == null)
-    //        return Vector2.zero;
-
-    //    float x = (keyboard.dKey.isPressed ? 1f : 0f)
-    //            - (keyboard.aKey.isPressed ? 1f : 0f);
-    //}
+    public void TestKey()
+    {
+        if (Keyboard.current.qKey.wasPressedThisFrame == true)
+        {
+            Debug.Log("PlayerLogic: Q key pressed - Requesting to equip GreatSword.");
+            weaponComponent.RequestEquip(11, "Assets/Prefabs/Weapons/GreatSword_Basic.prefab");
+        }
+                
+    }
 }

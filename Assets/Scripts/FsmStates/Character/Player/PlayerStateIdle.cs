@@ -16,7 +16,6 @@ public class PlayerStateIdle : FsmState<PlayerLogic>
     protected override void OnUpdate(
        IFsm<PlayerLogic> fsm, float elapseSeconds, float realElapseSeconds)
     {
-        Debug.Log("PlayerStateIdle OnUpdate");
         if (fsm.Owner.ReadMoveInput() != Vector2.zero)
             ChangeState<PlayerStateMove>(fsm);
     }
