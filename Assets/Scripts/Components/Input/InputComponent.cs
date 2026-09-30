@@ -7,31 +7,16 @@ public sealed class InputComponent : GameFrameworkComponent
 {
     private InputAction moveAction;
     private InputAction attackAction;
+    
+    public event System.Action OnAttackEvent;
 
-    private PlayerLogic playerLogic;
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Life Cycle
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     protected override void Awake()
     {
         base.Awake();
-        
-    }
-
-    private void OnEnable()
-    {
-        attackAction.performed += OnAttack;
-    }
-
-    private void OnDisable()
-    {
-        attackAction.performed -= OnAttack;
-    }
-
-    private void OnAttack(InputAction.CallbackContext context)
-    {
-        //if (!GameplayInputEnabled || player == null)
-        return;
-
-        // playerLogic.DoAttack
     }
 
     private void Start() // MonoBehaviour에 정의하는 Start 메서드, 게임 시작 시 한 번 호출
@@ -40,12 +25,35 @@ public sealed class InputComponent : GameFrameworkComponent
         attackAction = InputSystem.actions.FindAction("Player/Attack", throwIfNotFound: true);
     }
 
+    private void OnEnable()
+    {
+        attackAction.performed += OnLeftClick;
+    }
+
     private void Update()
     {
 
     }
 
+    private void OnDisable()
+    {
+        attackAction.performed -= OnLeftClick;
+    }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Private Functions
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
+    private void OnLeftClick(InputAction.CallbackContext context)
+    {
+        OnAttackEvent?.Invoke();
+
+        return;
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Public Functions
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Vector2 ReadMoveInput()
     {

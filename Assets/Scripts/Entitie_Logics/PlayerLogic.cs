@@ -1,7 +1,7 @@
-using GameFramework.Fsm;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
+using GameFramework.Fsm;
 
 public class PlayerLogic : EntityLogic
 {
@@ -11,37 +11,44 @@ public class PlayerLogic : EntityLogic
     private Transform cameraTransform;
 
     private InputComponent inputComponent { get; set; }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Life Cycle
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+
     protected override void OnInit(object userData)
     {
         base.OnInit(userData);
         animator = GetComponentInChildren<Animator>(true);
-
         inputComponent = GameEntry.GetComponent<InputComponent>();
-
         return;
     }
 
-    private void CreateFsm()
-    {
-        fsmComponent = GameEntry.GetComponent<FsmComponent>();
-        mFsm = fsmComponent.CreateFsm(
-            this,
-            new PlayerStateIdle(),
-            new PlayerStateMove()
-        );
-    }
+  
     protected override void OnShow(object userData)
     {
         base.OnShow(userData);
-        CreateFsm();
-        mFsm.Start<PlayerStateIdle>();
 
-        Camera mainCamera = Camera.main;
-        if (mainCamera != null)
+        // FSM Setting
         {
-            cameraTransform = mainCamera.transform;
-            cameraTransform.SetParent(CachedTransform, false);
-            cameraTransform.localPosition = new Vector3(0f, 0f, -10f);
+            CreateFsm();
+            mFsm.Start<PlayerStateIdle>();
+        }
+
+        // Camera Setting
+        {
+            Camera mainCamera = Camera.main;
+            if (mainCamera != null)
+            {
+                cameraTransform = mainCamera.transform;
+                cameraTransform.SetParent(CachedTransform, false);
+                cameraTransform.localPosition = new Vector3(0f, 0f, -10f);
+            }
+        }
+
+        // Event Subscription (Hide때 구독 해지 해야하므로 Show에서 구독 설정)
+        {
+            inputComponent.AttackAction.performed += OnAttack;
         }
     }
 
@@ -53,17 +60,30 @@ public class PlayerLogic : EntityLogic
 
     protected override void OnHide(bool isShutdown, object userData)
     {
-        if (cameraTransform != null && cameraTransform.parent == CachedTransform)
-        {
-            cameraTransform.SetParent(null, true);
-        }
-        cameraTransform = null;
-
+        // FSM hide
         fsmComponent.DestroyFsm(mFsm);
+
+        // Camera hide
+        {
+            if (cameraTransform != null && cameraTransform.parent == CachedTransform)
+            {
+                cameraTransform.SetParent(null, true);
+            }
+            cameraTransform = null;
+        }
+
+
+        // Event Unsubscription
+        {
+            inputComponent.AttackAction.performed -= OnAttack;
+        }
 
         base.OnHide(isShutdown, userData);
     }
 
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Private Function
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     // Anim관련 값이 많아질거 같아서 일단 함수로 묶어둠
     private void UpdateAnimation()
@@ -79,6 +99,27 @@ public class PlayerLogic : EntityLogic
         bool isMove = mFsm != null && mFsm.CurrentState is PlayerStateMove;
         animator.SetBool("isMove", isMove);
     }
+
+
+    private void CreateFsm()
+    {
+        fsmComponent = GameEntry.GetComponent<FsmComponent>();
+        mFsm = fsmComponent.CreateFsm(
+            this,
+            new PlayerStateIdle(),
+            new PlayerStateMove()
+        );
+    }
+
+
+    private void OnAttack(InputAction.CallbackContext context)
+    {
+        // DoSomething when attack input is performed
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Public Function
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     public Vector2 ReadMoveInput()
     {
