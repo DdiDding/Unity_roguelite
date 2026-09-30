@@ -144,6 +144,5 @@ public class PlayerLogic : EntityLogic
             Debug.Log("PlayerLogic: Q key pressed - Requesting to equip GreatSword.");
             weaponComponent.RequestEquip(11, "Assets/Prefabs/Weapons/GreatSword_Basic.prefab");
         }
-                
     }
 }

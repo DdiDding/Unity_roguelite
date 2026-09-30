@@ -11,6 +11,7 @@ public class WeaponComponent : MonoBehaviour
     private Transform owerSocket;
 
     private int? weaponId;
+    private Transform aimTransform;
 
     public WeaponLogic CurrentWeapon { get; private set; }
 
@@ -49,6 +50,7 @@ public class WeaponComponent : MonoBehaviour
     {
         this.owner = owner;
         this.owerSocket = owerSocket;
+        this.aimTransform = transform.Find("Aim");
 
         // Subscribe to events
         eventComponent.Subscribe(ShowEntitySuccessEventArgs.EventId, OnRequestEquipSuccess);
