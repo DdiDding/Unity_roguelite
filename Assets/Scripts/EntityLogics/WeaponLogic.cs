@@ -10,6 +10,8 @@ public class WeaponLogic :EntityLogic
     private Transform aimPivot;
     private Vector2 aimTargetPosition;
 
+    private Animator animator;
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Life Cycle
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -19,6 +21,7 @@ public class WeaponLogic :EntityLogic
         base.OnInit(userData);
 
         this.aimPivot = CachedTransform.Find("WeaponRoot/AttackPivot/AimPivot");
+        this.animator = GetComponent<Animator>();
 
         return;
     }
@@ -54,8 +57,19 @@ public class WeaponLogic :EntityLogic
     // Public Functions
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void DoNormalAttak()
+    {
+        if (animator == null) return;
+
+        bool isStateIdle = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        if (isStateIdle == false) return;
+
+        animator.SetTrigger("Attak");
+    }
+
     public void SetAimTarget(Vector2 worldPosition)
     {
         aimTargetPosition = worldPosition;
     }
+
 }

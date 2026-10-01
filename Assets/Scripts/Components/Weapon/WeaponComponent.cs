@@ -91,6 +91,7 @@ public class WeaponComponent : MonoBehaviour
 
     public void DoNormalAttack()
     {
-
+        if (EquipWeapon == null) return;
+        EquipWeapon.DoNormalAttak();
     }
 }

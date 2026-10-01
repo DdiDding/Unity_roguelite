@@ -157,8 +157,10 @@ public class PlayerLogic : EntityLogic
 
     private void OnAttack()
     {
-        // DoSomething when attack input is performed
-        Debug.Log("PlayerLogic: Attack input performed!");
+        if (weaponComponent == null)
+            return;
+
+        weaponComponent.DoNormalAttack();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
