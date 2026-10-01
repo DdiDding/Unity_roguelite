@@ -30,9 +30,9 @@ public class WeaponLogic :EntityLogic
         UpdateAimRotation();
     }
 
-    private void UpdateAimRotation(Vector2 worldPosition)
+    private void UpdateAimRotation()
     {
-        Vector2 direction = worldPosition - (Vector2)aimPivot.position;
+        Vector2 direction = aimTargetPosition - (Vector2)aimPivot.position;
 
         bool isZeroDirection = direction.sqrMagnitude < 0.0001f;
         if (isZeroDirection == true) return;

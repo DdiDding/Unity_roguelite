@@ -63,7 +63,7 @@ public class PlayerLogic : EntityLogic
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
         UpdateAnimation();
-        UpdateWeaponAim()
+        UpdateWeaponAim();
 
         TestKey();
     }
@@ -115,9 +115,10 @@ public class PlayerLogic : EntityLogic
     {
         if (weaponComponent.EquipWeapon == null) return;
 
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+        Vector3 screenPoint = Mouse.current.position.ReadValue();
+        screenPoint.z = Camera.main.WorldToScreenPoint(CachedTransform.position).z;
 
+        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(screenPoint);
         weaponComponent.SetAimTarget(worldMousePos);
     }
 

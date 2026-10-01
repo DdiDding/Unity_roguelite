@@ -41,7 +41,7 @@ public class WeaponComponent : MonoBehaviour
 
     // 마우스에 따라 Weapon의 AimPivot를 회전
     // Player와 Enemy에 따라 처리 가능하게끔 매개변수로 받음
-    private void SetAimTarget(Vector2 worldPosition)
+    public void SetAimTarget(Vector2 worldPosition)
     {
         EquipWeapon.SetAimTarget(worldPosition);
     }
