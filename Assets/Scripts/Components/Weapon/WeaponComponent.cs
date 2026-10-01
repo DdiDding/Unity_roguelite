@@ -72,6 +72,23 @@ public class WeaponComponent : MonoBehaviour
         entitiyComponent.ShowEntity<WeaponLogic>(requestEntityId, asset, "Weapon", (object) requestEntityId);
     }
 
+    public void SetSocket(Transform socket)
+    {
+        if (socket == null || EquipWeapon == null) return;
+
+        Transform weaponTransform = EquipWeapon.CachedTransform;
+
+        // 같은 소켓에 매 프레임 재부착하지 않음
+        if (weaponTransform.parent == socket) return;
+
+        entitiyComponent.AttachEntity(EquipWeapon.Entity, owner.Entity, socket);
+
+        // Entity 최상위 루트만 새 소켓에 정렬한다.
+        weaponTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        weaponTransform.localScale = Vector3.one;
+    }
+
+
     public void DoNormalAttack()
     {
 

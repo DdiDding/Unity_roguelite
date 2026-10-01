@@ -1,12 +1,19 @@
+using GameFramework.Fsm;
+using System.Net.WebSockets;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityGameFramework.Runtime;
-using GameFramework.Fsm;
 
 public class PlayerLogic : EntityLogic
 {
+    private bool bIsLookUp;
+    bool bIsfaceLeft;
+    bool bIsMove;
+
     private IFsm<PlayerLogic> mFsm;
     private Animator animator;
+    private Transform upperSocket;
+    private Transform lowerSocket;
     private Transform cameraTransform;
 
     private InputComponent inputComponent { get; set; }
@@ -21,12 +28,13 @@ public class PlayerLogic : EntityLogic
     {
         base.OnInit(userData);
 
-        inputComponent = GameEntry.GetComponent<InputComponent>();
-
-        weaponComponent = GetComponent<WeaponComponent>();
-        Transform upperSocket = CachedTransform.Find("Visual/WeaponSocketUpper");
-        weaponComponent?.CustomInit(this, upperSocket);
         animator = GetComponentInChildren<Animator>(true);
+        lowerSocket = CachedTransform.Find("Visual/WeaponSocketLower");
+        upperSocket = CachedTransform.Find("Visual/WeaponSocketUpper");
+
+        inputComponent = GameEntry.GetComponent<InputComponent>();
+        weaponComponent = GetComponent<WeaponComponent>();
+        weaponComponent?.CustomInit(this, upperSocket); //TODO : Equip 분리
 
         return;
     }
@@ -62,8 +70,9 @@ public class PlayerLogic : EntityLogic
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
+        UpdateData();
         UpdateAnimation();
-        UpdateWeaponAim();
+        UpdateWeapon();
 
         TestKey();
     }
@@ -95,31 +104,44 @@ public class PlayerLogic : EntityLogic
     // Private Function
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
+    private void UpdateData()
+    {
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        bIsLookUp = mousePos.y > Screen.height * 0.5f;
+
+        bIsfaceLeft = mousePos.x < Screen.width * 0.5f;
+
+        bIsMove = mFsm != null && mFsm.CurrentState is PlayerStateMove;
+    }
+
     // Anim관련 값이 많아질거 같아서 일단 함수로 묶어둠
     private void UpdateAnimation()
     {
-        Vector2 mousePos = Mouse.current.position.ReadValue();
-        bool isLookUp = mousePos.y > Screen.height * 0.5f;
+        animator.SetBool("isLookUp", bIsLookUp);
 
-        animator.SetBool("isLookUp", isLookUp);
+        CachedTransform.Find("Visual").SetLocalScaleX((bIsfaceLeft ? -1f : 1f));
 
-        bool faceLeft = mousePos.x < Screen.width * 0.5f;
-        CachedTransform.Find("Visual").SetLocalScaleX((faceLeft ? -1f : 1f));
-
-        bool isMove = mFsm != null && mFsm.CurrentState is PlayerStateMove;
-        animator.SetBool("isMove", isMove);
+        animator.SetBool("isMove", bIsMove);
     }
 
 
-    private void UpdateWeaponAim()
+    private void UpdateWeapon()
     {
-        if (weaponComponent.EquipWeapon == null) return;
+        // Update socket
+        {
+            weaponComponent.SetSocket(bIsLookUp ? upperSocket : lowerSocket);
+        }
 
-        Vector3 screenPoint = Mouse.current.position.ReadValue();
-        screenPoint.z = Camera.main.WorldToScreenPoint(CachedTransform.position).z;
+        // Update WeaponAim
+        {
+            if (weaponComponent.EquipWeapon == null) return;
 
-        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(screenPoint);
-        weaponComponent.SetAimTarget(worldMousePos);
+            Vector3 screenPoint = Mouse.current.position.ReadValue();
+            screenPoint.z = Camera.main.WorldToScreenPoint(CachedTransform.position).z;
+
+            Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(screenPoint);
+            weaponComponent.SetAimTarget(worldMousePos);
+        }
     }
 
     private void CreateFsm()
