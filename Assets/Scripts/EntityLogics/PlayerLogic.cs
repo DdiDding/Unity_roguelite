@@ -63,6 +63,7 @@ public class PlayerLogic : EntityLogic
     {
         base.OnUpdate(elapseSeconds, realElapseSeconds);
         UpdateAnimation();
+        UpdateWeaponAim()
 
         TestKey();
     }
@@ -109,6 +110,16 @@ public class PlayerLogic : EntityLogic
         animator.SetBool("isMove", isMove);
     }
 
+
+    private void UpdateWeaponAim()
+    {
+        if (weaponComponent.EquipWeapon == null) return;
+
+        Vector2 mousePos = Mouse.current.position.ReadValue();
+        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(mousePos);
+
+        weaponComponent.SetAimTarget(worldMousePos);
+    }
 
     private void CreateFsm()
     {

@@ -11,11 +11,9 @@ public class WeaponComponent : MonoBehaviour
     private Transform owerSocket;
 
     private int? weaponId;
-    private Transform aimTransform;
 
-    public WeaponLogic CurrentWeapon { get; private set; }
-
-
+    private Transform aimPivot;
+    public WeaponLogic EquipWeapon { get; private set; }
 
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -23,18 +21,16 @@ public class WeaponComponent : MonoBehaviour
     //////////////////////////////////////////////////////////////////////////////////////////////////
     private void OnRequestEquipSuccess(object sender, GameEventArgs args)
     {
-        // TODO: 유효성 검사
         var weaponEntity = (ShowEntitySuccessEventArgs)args;
-
         if (!weaponId.HasValue || weaponEntity.Entity.Id != weaponId.Value) return;
 
         entitiyComponent.AttachEntity(weaponEntity.Entity, owner.Entity, owerSocket);
-        WeaponLogic weapon = (WeaponLogic)weaponEntity.Entity.Logic;
 
-        weapon.CachedTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
-        weapon.CachedTransform.localScale = Vector3.one;
+        this.EquipWeapon = (WeaponLogic)weaponEntity.Entity.Logic;
+        this.EquipWeapon.CachedTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
+        this.EquipWeapon.CachedTransform.localScale = Vector3.one;
 
-        CurrentWeapon = weapon;
+        this.aimPivot = EquipWeapon.CachedTransform.Find("AttackPivot/AimPivot");
     }
 
     private void OnRequestEquipFailure(object sender, GameEventArgs args)
@@ -42,15 +38,22 @@ public class WeaponComponent : MonoBehaviour
         Debug.LogError("WeaponComponent: OnRequestEquipFailure");
     }
 
+    // 마우스에 따라 Weapon의 AimPivot를 회전
+    // Player와 Enemy에 따라 처리 가능하게끔 매개변수로 받음
+    private void SetAimTarget(Vector2 worldPosition)
+    {
+        EquipWeapon.SetAimTarget(worldPosition);
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Public Functions
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
+    // 무기가 없을 수도 있다는 것에 주의
     public void CustomInit(EntityLogic owner, Transform owerSocket)
     {
         this.owner = owner;
         this.owerSocket = owerSocket;
-        this.aimTransform = transform.Find("Aim");
 
         // Subscribe to events
         eventComponent.Subscribe(ShowEntitySuccessEventArgs.EventId, OnRequestEquipSuccess);
