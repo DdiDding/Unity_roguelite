@@ -18,7 +18,7 @@ public class WeaponLogic :EntityLogic
     {
         base.OnInit(userData);
 
-        this.aimPivot = CachedTransform.Find("AttackPivot/AimPivot");
+        this.aimPivot = CachedTransform.Find("WeaponRoot/AttackPivot/AimPivot");
 
         return;
     }
@@ -32,14 +32,21 @@ public class WeaponLogic :EntityLogic
 
     private void UpdateAimRotation()
     {
-        Vector2 direction = aimTargetPosition - (Vector2)aimPivot.position;
+        if (aimPivot == null)
+            return;
 
-        bool isZeroDirection = direction.sqrMagnitude < 0.0001f;
-        if (isZeroDirection == true) return;
+        Vector2 worldDirection =
+            aimTargetPosition - (Vector2)aimPivot.position;
 
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        // 부모의 좌우 반전까지 반영하여 무기 루트 기준으로 변환
+        Vector2 localDirection = CachedTransform.InverseTransformVector(worldDirection);
 
-        aimPivot.rotation = Quaternion.Euler(0f, 0f, angle);
+        bool isNearZero = localDirection.sqrMagnitude < 0.0001f;
+        if (isNearZero) return;
+
+        float angle = Mathf.Atan2(localDirection.y, localDirection.x) * Mathf.Rad2Deg;
+
+        aimPivot.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

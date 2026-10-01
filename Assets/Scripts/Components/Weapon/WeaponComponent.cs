@@ -31,7 +31,7 @@ public class WeaponComponent : MonoBehaviour
         this.EquipWeapon.CachedTransform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
         this.EquipWeapon.CachedTransform.localScale = Vector3.one;
 
-        this.aimPivot = EquipWeapon.CachedTransform.Find("AttackPivot/AimPivot");
+        this.aimPivot = EquipWeapon.CachedTransform.Find("WeaponRoot/AttackPivot/AimPivot");
     }
 
     private void OnRequestEquipFailure(object sender, GameEventArgs args)
