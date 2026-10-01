@@ -7,11 +7,11 @@ public class PlayerLogic : EntityLogic
 {
     private IFsm<PlayerLogic> mFsm;
     private Animator animator;
-    private FsmComponent fsmComponent;
     private Transform cameraTransform;
-    private WeaponComponent weaponComponent;
 
     private InputComponent inputComponent { get; set; }
+    private FsmComponent fsmComponent;
+    private WeaponComponent weaponComponent;
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Life Cycle

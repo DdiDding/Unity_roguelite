@@ -7,6 +7,7 @@ public class WeaponComponent : MonoBehaviour
 {
     private readonly EntityComponent entitiyComponent = GameEntry.GetComponent<EntityComponent>();
     private readonly EventComponent eventComponent = GameEntry.GetComponent<EventComponent>();
+
     private EntityLogic owner;
     private Transform owerSocket;
 
