@@ -3,7 +3,11 @@ using UnityEngine;
 public class SkillConfig : MonoBehaviour
 {
     [SerializeField]
-    private SkillDefinition NormalAtk;
+    private Skill NormalAtk;
     [SerializeField]
-    private SkillDefinition SpecialAtk;
+    private Skill SpecialAtk;
+
+    
+    public Skill NormalAttak => NormalAtk;
+    public Skill SpecialAttak => SpecialAtk;
 }

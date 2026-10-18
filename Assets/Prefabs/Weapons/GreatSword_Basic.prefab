@@ -233,7 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a53b500a5ad06f4fa16eb655682b342, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WeaponConfig
-  NormalAtk: {fileID: 0}
+  NormalAtk: {fileID: 11400000, guid: 5371cfe74c8228e4a93501e1af0ce930, type: 2}
   SpecialAtk: {fileID: 0}
 --- !u!95 &5037222190503890821
 Animator:

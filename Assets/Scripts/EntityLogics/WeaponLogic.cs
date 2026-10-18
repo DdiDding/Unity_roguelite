@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityGameFramework.Runtime;
+using UnityEngine.Playables;
 
 public class WeaponLogic :EntityLogic
 {
@@ -12,6 +13,8 @@ public class WeaponLogic :EntityLogic
 
     private Animator animator;
 
+    private SkillConfig skillConfig;
+    private PlayableGraph animationGraph;
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Life Cycle
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -22,6 +25,7 @@ public class WeaponLogic :EntityLogic
 
         this.aimPivot = CachedTransform.Find("WeaponRoot/AttackPivot/AimPivot");
         this.animator = GetComponent<Animator>();
+        this.skillConfig = GetComponentInChildren<SkillConfig>();
 
         return;
     }
@@ -31,7 +35,17 @@ public class WeaponLogic :EntityLogic
         base.OnUpdate(elapseSeconds, realElapseSeconds);
 
         UpdateAimRotation();
+
+        // 공격 애니메이션 끝나면 기존 animator로 돌아가기
+        if (animationGraph.IsValid() && animationGraph.IsDone())
+        {
+            StopClip();
+        }
     }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////
+    // Private Functions
+    //////////////////////////////////////////////////////////////////////////////////////////////////
 
     private void UpdateAimRotation()
     {
@@ -53,6 +67,15 @@ public class WeaponLogic :EntityLogic
         aimPivot.localRotation = Quaternion.Euler(0f, 0f, angle);
     }
 
+    private void StopClip()
+    {
+        if (animationGraph.IsValid())
+        {
+            animationGraph.Stop();
+            animationGraph.Destroy();
+        };
+    }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Public Functions
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -60,16 +83,24 @@ public class WeaponLogic :EntityLogic
     public void DoNormalAttak()
     {
         if (animator == null) return;
+        if (skillConfig == null) return;
 
-        bool isStateIdle = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
-        if (isStateIdle == false) return;
 
-        animator.SetTrigger("Attak");
+        AnimationClip clip = skillConfig.NormalAttak.GetSkill(0).AnimationClip;
+
+        StopClip();
+        var playable = AnimationPlayableUtilities.PlayClip(this.animator, clip, out animationGraph);
+        playable.SetDuration(clip.length);
+
+        //bool isStateIdle = animator.GetCurrentAnimatorStateInfo(0).IsName("Idle");
+        //if (isStateIdle == false) return;
+        //animator.SetTrigger("Attak");
     }
-
     public void SetAimTarget(Vector2 worldPosition)
     {
         aimTargetPosition = worldPosition;
     }
+
+    
 
 }

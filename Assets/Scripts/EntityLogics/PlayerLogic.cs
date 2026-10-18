@@ -10,11 +10,13 @@ public class PlayerLogic : EntityLogic
     bool bIsfaceLeft;
     bool bIsMove;
 
+
     private IFsm<PlayerLogic> mFsm;
     private Animator animator;
     private Transform upperSocket;
     private Transform lowerSocket;
     private Transform cameraTransform;
+
 
     private InputComponent inputComponent { get; set; }
     private FsmComponent fsmComponent;
@@ -175,10 +177,22 @@ public class PlayerLogic : EntityLogic
     // 나중에 키 테스트할지도 모름
     public void TestKey()
     {
-        if (Keyboard.current.qKey.wasPressedThisFrame == true)
+        if (Keyboard.current.digit1Key.wasPressedThisFrame == true)
         {
-            Debug.Log("PlayerLogic: Q key pressed - Requesting to equip GreatSword.");
+            Debug.Log("PlayerLogic: 1 key pressed - Requesting to equip GreatSword.");
             weaponComponent.RequestEquip(11, "Assets/Prefabs/Weapons/GreatSword_Basic.prefab");
+        }
+
+        if (Keyboard.current.digit2Key.wasPressedThisFrame == true)
+        {
+            Debug.Log("PlayerLogic: 2 key pressed - Requesting to equip CrossBow.");
+            weaponComponent.RequestEquip(12, "Assets/Prefabs/Weapons/Crossbow.prefab");
+        }
+
+        if (Keyboard.current.digit3Key.wasPressedThisFrame == true)
+        {
+            Debug.Log("PlayerLogic: 3 key pressed - Requesting to equip MagicalStaff.");
+            weaponComponent.RequestEquip(13, "Assets/Prefabs/Weapons/MagicalStaff.prefab");
         }
     }
 }

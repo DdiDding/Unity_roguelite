@@ -16,7 +16,6 @@ public class WeaponComponent : MonoBehaviour
     private Transform aimPivot;
     public WeaponLogic EquipWeapon { get; private set; }
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////
     // Private Functions
     //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -66,11 +65,30 @@ public class WeaponComponent : MonoBehaviour
      */
     public void RequestEquip(int requestEntityId, string asset)
     {
-        // TODO : Unequip();
+        bool bAlreadyEquipped = (EquipWeapon != null);
+        if (bAlreadyEquipped)
+        {
+            RequestUnequip();
+        }
 
         this.weaponId = requestEntityId;
         entitiyComponent.ShowEntity<WeaponLogic>(requestEntityId, asset, "Weapon", (object) requestEntityId);
     }
+
+    /* RequestUnequip
+     * 장착하려는 WeaponEntity의 Hide요청
+     */
+    public void RequestUnequip()
+    {
+        if (EquipWeapon == null) return;
+
+        entitiyComponent.HideEntity(EquipWeapon.Entity.Id);
+        this.EquipWeapon = null;
+
+        weaponId = null;
+    }
+
+
 
     public void SetSocket(Transform socket)
     {
