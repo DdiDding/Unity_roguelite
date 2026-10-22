@@ -12,6 +12,8 @@ public class WeaponLogic :EntityLogic
     private Vector2 aimTargetPosition;
 
     private Animator animator;
+    private WeaponAttackRange attackRange;
+    private LaunchProjectile projectileLauncher;
 
     private SkillConfig skillConfig;
     private PlayableGraph animationGraph;
@@ -25,9 +27,52 @@ public class WeaponLogic :EntityLogic
 
         this.aimPivot = CachedTransform.Find("WeaponRoot/AttackPivot/AimPivot");
         this.animator = GetComponent<Animator>();
+        this.attackRange = GetComponent<WeaponAttackRange>();
+        this.projectileLauncher = GetComponentInChildren<LaunchProjectile>(true);
         this.skillConfig = GetComponentInChildren<SkillConfig>();
 
         return;
+    }
+
+    protected override void OnAttachTo(EntityLogic parentEntity, Transform parentTransform, object userData)
+    {
+        base.OnAttachTo(parentEntity, parentTransform, userData);
+        StatComponent ownerStats = parentEntity.GetComponent<StatComponent>();
+        if (attackRange != null)
+        {
+            attackRange.SetOwner(ownerStats);
+        }
+        if (projectileLauncher != null)
+        {
+            projectileLauncher.SetOwner(ownerStats);
+        }
+    }
+
+    protected override void OnDetachFrom(EntityLogic parentEntity, object userData)
+    {
+        if (attackRange != null)
+        {
+            attackRange.SetOwner(null);
+        }
+        if (projectileLauncher != null)
+        {
+            projectileLauncher.SetOwner(null);
+        }
+        base.OnDetachFrom(parentEntity, userData);
+    }
+
+    protected override void OnHide(bool isShutdown, object userData)
+    {
+        if (attackRange != null)
+        {
+            attackRange.SetOwner(null);
+        }
+        if (projectileLauncher != null)
+        {
+            projectileLauncher.SetOwner(null);
+        }
+        StopClip();
+        base.OnHide(isShutdown, userData);
     }
 
     protected override void OnUpdate(float elapseSeconds, float realElapseSeconds)

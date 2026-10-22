@@ -308,6 +308,7 @@ GameObject:
   m_Component:
   - component: {fileID: 19814606755484813}
   - component: {fileID: 8487659034210123456}
+  - component: {fileID: 556134575844851014}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -343,3 +344,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a417ff2a51daf0469e4a87f05f61fce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &556134575844851014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6905319616721634222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a46e0235cdc48a943af8c0c1da57dd80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::StatComponent
+  attack: 10
+  defense: 0
+  maxHp: 100
