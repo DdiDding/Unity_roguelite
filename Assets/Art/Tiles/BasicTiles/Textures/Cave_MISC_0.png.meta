@@ -1,0 +1,314 @@
+fileFormatVersion: 2
+guid: a1e966090810f85418c71228cf502847
+timeCreated: 1763894268
+licenseType: Free
+TextureImporter:
+  serializedVersion: 13
+  internalIDToNameTable:
+  - first:
+      213: 21300010
+    second: "CaveFloorProp4"
+  - first:
+      213: 21300000
+    second: "CaveWall_L_0"
+  - first:
+      213: 21300002
+    second: "CaveWall_L_1"
+  - first:
+      213: 21300004
+    second: "CaveWall_M_0"
+  - first:
+      213: 21300006
+    second: "CaveWall_M_2"
+  - first:
+      213: 21300008
+    second: "CaveWall_R_0"
+  externalObjects: {}
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 4
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 0
+  flipbookColumns: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: "CaveFloorProp4"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: 8}
+        - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76149f2e00116dc4cb08993645a5f2bf
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "CaveWall_L_0"
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: 18.000000319999998}
+        - {x: -8, y: -22.999999680000002}
+        - {x: -3, y: -21.999999680000002}
+        - {x: 8, y: -14.999999680000002}
+        - {x: 8, y: 18.000000319999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71fd2c84f076f1c438fc980fe7f3a5d2
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "CaveWall_L_1"
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -20.999999680000002}
+        - {x: 2, y: -20.999999680000002}
+        - {x: 7, y: -19.999999680000002}
+        - {x: 8, y: -16.999999680000002}
+        - {x: 8, y: 18.000000319999998}
+        - {x: -8, y: 18.000000319999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a59b30dc893b35d43b73fea03aa91485
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "CaveWall_M_0"
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -9.999999680000002}
+        - {x: -6, y: -10.999999680000002}
+        - {x: 3, y: -10.999999680000002}
+        - {x: 8, y: -9.999999680000002}
+        - {x: 8, y: 18.000000319999998}
+        - {x: -8, y: 18.000000319999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e222c8a53bea2f44f950ebd75d0e873e
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "CaveWall_M_2"
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -9.999999680000002}
+        - {x: 2, y: -11.999999680000002}
+        - {x: 5, y: -11.999999680000002}
+        - {x: 8, y: -9.999999680000002}
+        - {x: 8, y: 18.000000319999998}
+        - {x: -8, y: 18.000000319999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: db30bd2ac6a3b3d4e9edd192dc0ff764
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "CaveWall_R_0"
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5, y: 0.33333334}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -9.999999680000002}
+        - {x: 7, y: -19.999999680000002}
+        - {x: 8, y: -19.999999680000002}
+        - {x: 8, y: 18.000000319999998}
+        - {x: -8, y: 18.000000319999998}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95781e2db28d0cf40a8e7b69eb715542
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 138a2af283748db047994edad2a22027
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      "CaveFloorProp4": 21300010
+      "CaveWall_L_0": 21300000
+      "CaveWall_L_1": 21300002
+      "CaveWall_M_0": 21300004
+      "CaveWall_M_2": 21300006
+      "CaveWall_R_0": 21300008
+  mipmapLimitGroupName:
+  output:
+    textureImportInstructions:
+      compressedFormat: 0
+      uncompressedFormat: 0
+      desiredFormat: 0
+      usageMode: 0
+      colorSpace: 0
+      androidETC2FallbackFormat: 0
+      width: 0
+      height: 0
+      depth: 0
+      cubeIntermediateSize: 0
+      cubeMode: 0
+      cubeLayout: 0
+      compressionQuality: 0
+      androidETC2FallbackDownscale: 0
+      vtOnly: 0
+    sourceTextureInformation:
+      width: 0
+      height: 0
+      doesTextureContainAlpha: 0
+      sourceWasHDR: 0
+    importInspectorWarnings:
+  pSDRemoveMatte: 0
+  userData:
+  assetBundleName:
+  assetBundleVariant:
